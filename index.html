@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Recovery Update – Gandhinagar Division</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#217346">
+<meta name="description" content="Case-wise recovery updates for STOs – Gandhinagar Division">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script src="config.js"></script>
+<style>
+  :root{--g:#217346;--g2:#185c37;--line:#d4d4d4;--head:#f3f3f3;--yel:#fffbe6;--red:#c00000;--amb:#b26a00;--txt:#1f1f1f;--mut:#666}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Segoe UI,Roboto,Arial,sans-serif;font-size:14px;color:var(--txt);background:#fff}
+  .bar{background:var(--g);color:#fff;padding:10px 12px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:5}
+  .bar h1{font-size:16px;margin:0;font-weight:600;flex:1;line-height:1.2}
+  .bar small{display:block;font-weight:400;opacity:.85;font-size:12px}
+  .bar button{background:transparent;border:1px solid rgba(255,255,255,.6);color:#fff;border-radius:4px;padding:5px 10px;font-size:13px}
+  .wrap{padding:12px;max-width:900px;margin:0 auto}
+  label{display:block;font-weight:600;margin:12px 0 4px;font-size:13px}
+  select,input,textarea{width:100%;font-size:15px;padding:9px 8px;border:1px solid #9e9e9e;border-radius:3px;background:#fff;font-family:inherit}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--g);border-color:var(--g)}
+  .fill{background:var(--yel)}
+  .btn{display:block;width:100%;padding:12px;margin-top:16px;font-size:16px;font-weight:600;color:#fff;background:var(--g);border:0;border-radius:4px}
+  .btn.sec{background:#fff;color:var(--g);border:1px solid var(--g)}
+  .btn:disabled{opacity:.6}
+  .hide{display:none!important}
+  .err{color:var(--red);font-weight:600;margin-top:10px}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);margin-bottom:10px}
+  .stats div{padding:6px;border-right:1px solid var(--line);text-align:center}
+  .stats div:last-child{border-right:0}
+  .stats b{display:block;font-size:14px}
+  .stats span{font-size:11px;color:var(--mut)}
+  .tabs{display:flex;border-bottom:2px solid var(--g)}
+  .tabs button{flex:1;padding:9px 4px;border:1px solid var(--line);border-bottom:0;background:var(--head);font-size:14px;font-weight:600;color:var(--mut)}
+  .tabs button.on{background:var(--g);color:#fff;border-color:var(--g)}
+  .tools{display:flex;gap:6px;margin:8px 0}
+  .tools input{flex:1;padding:7px}
+  .tools select{width:auto;padding:7px;font-size:13px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{border:1px solid var(--line);padding:6px 5px;vertical-align:top}
+  th{background:var(--head);font-weight:600;text-align:left;position:sticky;top:52px;z-index:2;font-size:12px}
+  td.n,th.n{text-align:right;white-space:nowrap}
+  td.c{text-align:center;width:28px;color:var(--mut)}
+  tbody tr{cursor:pointer}
+  tbody tr:active{background:#e8f3ec}
+  .sub{display:block;color:var(--mut);font-size:11px;margin-top:2px}
+  .tag{display:inline-block;font-size:11px;padding:1px 5px;border-radius:3px;white-space:nowrap}
+  .ok{background:#c6efce;color:#006100}.old{background:#ffeb9c;color:#7a5600}.no{background:#ffc7ce;color:#9c0006}
+  .card{border:1px solid var(--line);margin-bottom:6px}
+  .card table td{border-left:0;border-right:0}
+  .card td:first-child{color:var(--mut);width:42%;font-size:12px}
+  .seg{display:flex;gap:0}
+  .seg button{flex:1;padding:9px;border:1px solid #9e9e9e;background:#fff;font-size:15px}
+  .seg button:first-child{border-radius:3px 0 0 3px}.seg button:last-child{border-radius:0 3px 3px 0;border-left:0}
+  .seg button.on{background:var(--g);color:#fff;border-color:var(--g)}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .hint{font-size:12px;color:var(--mut);margin-top:3px}
+  .sec-h{margin:18px 0 0;padding:6px 8px;background:var(--head);border-left:4px solid var(--g);font-weight:700;font-size:13px}
+  .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#333;color:#fff;padding:10px 16px;border-radius:4px;z-index:20;font-size:14px}
+  .load{position:fixed;inset:0;background:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;z-index:30;font-weight:600;color:var(--g)}
+  tr.tot td{font-weight:700;background:#eaf3ee}
+  .sumt{font-size:12px}.sumt th{position:static;white-space:normal}.sumt td,.sumt th{padding:6px 4px}
+  a.tel{color:var(--g);font-weight:600}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <button id="backBtn" class="hide" onclick="goBack()">&#8592; Back</button>
+  <h1 id="title">Recovery Update<small id="subtitle">Loading…</small></h1>
+</div>
+
+<!-- SCREEN 1: choose unit & STO -->
+<div id="sHome" class="wrap hide">
+  <label for="unit">Select your Unit (Ghatak)</label>
+  <select id="unit" onchange="fillSto()"></select>
+  <label for="sto">Select your STO series</label>
+  <select id="sto" onchange="pinBox()"></select>
+  <div id="pinWrap" class="hide">
+    <label for="pin">PIN</label>
+    <input id="pin" type="password" inputmode="numeric" autocomplete="off">
+  </div>
+  <label for="by">Your name</label>
+  <input id="by" type="text" placeholder="e.g. R. K. Patel, STO" autocomplete="name">
+  <div id="homeErr" class="err"></div>
+  <button class="btn" onclick="openCases()">Show My Cases</button>
+  <button class="btn sec" onclick="openSummary()">View STO-wise Summary</button>
+  <button class="btn hide" id="installBtn" onclick="installApp()" style="background:#185c37">&#11015; Install as App on this phone</button>
+  <p class="hint hide" id="installHint" style="text-align:center;margin-top:10px">To install: tap Chrome menu <b>&#8942;</b> &rarr; <b>Add to Home screen</b> / <b>Install app</b></p>
+  <p style="text-align:center;color:#666;font-size:12px;margin-top:28px">Developed by <b>Mehul Ranavasiya</b><br>Gandhinagar Division</p>
+</div>
+
+<!-- SCREEN 2: list of cases -->
+<div id="sList" class="wrap hide">
+  <div id="sync" class="hint hide" style="background:#fff8d6;padding:5px 8px;margin:0 0 8px;border:1px solid #f0d67a"></div>
+  <div class="stats" id="stats"></div>
+  <div class="tabs">
+    <button id="tA" onclick="setTab('Active')">Active</button>
+    <button id="tC" onclick="setTab('Cancelled')">Cancelled</button>
+  </div>
+  <div class="tools">
+    <input id="q" type="search" placeholder="Search name / GSTIN" oninput="renderList()">
+    <select id="flt" onchange="renderList()">
+      <option value="all">All cases</option>
+      <option value="todo">Not updated this week</option>
+      <option value="never">Never updated</option>
+      <option value="ledger">Ledger balance &gt; 0</option>
+    </select>
+  </div>
+  <table>
+    <thead><tr><th class="n">#</th><th>Taxpayer</th><th class="n">Balance (Rs)</th><th>Update</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <p class="hint">Tap a case to fill / update its details. Green = updated in the last <span class="fd">7</span> days.</p>
+</div>
+
+<!-- SCREEN 3: form -->
+<div id="sForm" class="wrap hide">
+  <div class="card"><table id="info"></table></div>
+
+  <div class="sec-h">1. Ledger balances (as seen on GST portal today)</div>
+  <div class="row2">
+    <div><label for="fCash">Cash ledger (Rs)</label><input id="fCash" class="fill" type="text" inputmode="numeric" placeholder="0"></div>
+    <div><label for="fCredit">Credit ledger (Rs)</label><input id="fCredit" class="fill" type="text" inputmode="numeric" placeholder="0"></div>
+  </div>
+
+  <div class="sec-h">2. Spot visit</div>
+  <label>Spot visit conducted?</label>
+  <div class="seg" id="fSpot">
+    <button type="button" data-v="Yes" onclick="setSpot('Yes')">Yes</button>
+    <button type="button" data-v="No" onclick="setSpot('No')">No</button>
+  </div>
+  <div id="spotDateWrap" class="hide">
+    <label for="fSpotDate">Date of spot visit</label>
+    <input id="fSpotDate" class="fill" type="date">
+  </div>
+
+  <div class="sec-h">3. Last recovery step taken</div>
+  <label for="fStep">Recovery step</label>
+  <select id="fStep" class="fill"></select>
+  <label for="fStepDate">Date of this step</label>
+  <input id="fStepDate" class="fill" type="date">
+
+  <div class="sec-h">4. New recovery (if any)</div>
+  <label for="fAmt">Amount recovered now (Rs)</label>
+  <input id="fAmt" class="fill" type="text" inputmode="numeric" placeholder="Leave blank if no recovery">
+  <div class="hint">Enter only NEW recovery not entered earlier. Already recorded: <b id="already">0</b></div>
+  <div id="recDateWrap" class="hide">
+    <label for="fRecDate">Date of recovery</label>
+    <input id="fRecDate" class="fill" type="date">
+  </div>
+
+  <div class="sec-h">5. Remarks</div>
+  <textarea id="fRem" class="fill" rows="3" maxlength="500" placeholder="Any important detail (optional)"></textarea>
+
+  <div id="formErr" class="err"></div>
+  <button class="btn" id="saveBtn" onclick="save()">Save</button>
+  <button class="btn sec" onclick="goBack()">Cancel</button>
+  <p class="hint" id="lastUpd"></p>
+</div>
+
+<!-- SCREEN 4: summary -->
+<div id="sSum" class="wrap hide">
+  <p class="hint" id="sumAsOn"></p>
+  <div style="overflow-x:auto">
+  <table class="sumt">
+    <thead><tr><th>STO</th><th class="n">Cases</th><th class="n">Balance</th><th class="n">Recovered</th><th class="n">% of Target</th><th class="n">Updated (<span class="fd">7</span> days)</th></tr></thead>
+    <tbody id="sumRows"></tbody>
+  </table>
+  </div>
+</div>
+
+<div id="loading" class="load hide">Please wait…</div>
+<div id="toast" class="toast hide"></div>
+
+<script>
+var S = { meta:null, unit:'', sto:'', pin:'', by:'', cases:[], today:'', tab:'Active', cur:null, spot:'', screen:'sHome' };
+
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function inr(n){ n=Number(n)||0; return Math.round(n).toLocaleString('en-IN'); }
+function short(n){ n=Number(n)||0; if(n>=1e7) return (n/1e7).toFixed(2)+' Cr'; if(n>=1e5) return (n/1e5).toFixed(2)+' L'; return inr(n); }
+function dmy(s){ if(!s) return ''; var p=String(s).slice(0,10).split('-'); return p.length===3? p[2]+'-'+p[1]+'-'+p[0] : s; }
+function store(k,v){ try{ localStorage.setItem('rec_'+k,v); }catch(e){} }
+function recall(k){ try{ return localStorage.getItem('rec_'+k)||''; }catch(e){ return ''; } }
+function busy(on){ $('loading').classList.toggle('hide',!on); }
+function toast(t){ var e=$('toast'); e.textContent=t; e.classList.remove('hide'); setTimeout(function(){e.classList.add('hide');},2500); }
+function stepShort(s){ if(!s) return ''; var i=s.indexOf('('); return i>8? s.slice(0,i).trim() : s; }
+
+var API_URL = (window.APP_CONFIG && window.APP_CONFIG.apiUrl) || '';  /* set in config.js */
+var BOOT_META = null;
+/* Calls the server. Uses a direct web request first (works with multiple Google
+   accounts signed in); falls back to google.script.run only if that fails. */
+function api(fn){
+  var args=[].slice.call(arguments,1);
+  function viaGsr(){
+    return new Promise(function(res,rej){
+      if(typeof google==='undefined'||!google.script){ rej('Cannot reach the server. Please check internet and try again.'); return; }
+      var r=google.script.run.withSuccessHandler(res).withFailureHandler(function(e){ rej(e&&e.message?e.message:String(e)); });
+      r[fn].apply(r,args);
+    });
+  }
+  if(!API_URL || typeof fetch!=='function') return viaGsr();
+  return fetch(API_URL,{method:'POST',credentials:'omit',redirect:'follow',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({fn:fn,args:args})})
+    .then(function(r){ return r.json(); })
+    .then(function(j){ if(!j.ok) throw {server:j.error}; return j.data; })
+    .catch(function(e){ if(e && e.server) throw e.server; return viaGsr(); });
+}
+
+function show(id){
+  ['sHome','sList','sForm','sSum'].forEach(function(s){ $(s).classList.toggle('hide',s!==id); });
+  S.screen=id; $('backBtn').classList.toggle('hide',id==='sHome'); window.scrollTo(0,0);
+}
+function setTitle(t,sub){ $('title').innerHTML=esc(t)+'<small>'+esc(sub)+'</small>'; }
+function goBack(){
+  if(S.screen==='sForm'){ show('sList'); setTitle(S.unit+' · '+S.sto, S.by); renderList(); }
+  else { show('sHome'); setTitle('Recovery Update', S.meta.division); }
+}
+
+/* ---------- home ---------- */
+function init(){
+  function start(m){
+    S.meta=m; busy(false);
+    [].forEach.call(document.querySelectorAll('.fd'),function(e){ e.textContent=m.freshDays; });
+    setTitle('Recovery Update', m.division);
+    $('unit').innerHTML='<option value="">-- Select Unit --</option>'+m.units.map(function(u){return '<option>'+esc(u.name)+'</option>';}).join('');
+    var u=recall('unit'); if(u && m.units.some(function(x){return x.name===u;})) $('unit').value=u;
+    fillSto(); var s=recall('sto'); if(s) { $('sto').value=s; pinBox(); }
+    $('by').value=recall('by');
+    show('sHome');
+  }
+  if(BOOT_META && BOOT_META.units){ start(BOOT_META); return; }
+  var saved=null; try{ saved=JSON.parse(recall('meta')||'null'); }catch(e){}
+  if(saved && saved.units) start(saved); else busy(true);   // show saved list at once
+  api('getMeta').then(function(m){
+    store('meta',JSON.stringify(m));
+    if(!saved || JSON.stringify(saved)!==JSON.stringify(m)){ if(S.screen==='sHome'||!saved) start(m); else S.meta=m; }
+  }).catch(function(e){ busy(false); if(!saved){ setTitle('Recovery Update','No connection'); show('sHome'); $('homeErr').textContent=e; } });
+}
+function fillSto(){
+  var u=S.meta.units.find(function(x){return x.name===$('unit').value;});
+  $('sto').innerHTML='<option value="">-- Select STO --</option>'+(u?u.stos.map(function(s){return '<option>'+esc(s.name)+'</option>';}).join(''):'');
+  pinBox();
+}
+function pinBox(){
+  var u=S.meta.units.find(function(x){return x.name===$('unit').value;});
+  var s=u&&u.stos.find(function(x){return x.name===$('sto').value;});
+  $('pinWrap').classList.toggle('hide',!(s&&s.hasPin));
+  if(s && !s.hasPin) prefetch($('unit').value, s.name, '').catch(function(){});
+}
+/* ----- speed: saved copy on the phone + early loading ----- */
+var PRE={};  // key -> promise of fresh data
+function ckey(u,s){ return 'cases_'+u+'|'+s; }
+function cacheGet(u,s,pin){ try{ var o=JSON.parse(localStorage.getItem('rec_'+ckey(u,s))||'null'); return o && o.pin===pin ? o.data : null; }catch(e){ return null; } }
+function cachePut(u,s,pin,data){ try{ localStorage.setItem('rec_'+ckey(u,s), JSON.stringify({pin:pin,data:data})); }catch(e){} }
+function prefetch(u,s,pin){
+  var k=ckey(u,s)+'|'+pin;
+  if(!PRE[k]) PRE[k]=api('getCases',u,s,pin).then(function(r){ cachePut(u,s,pin,r); return r; },
+                                                 function(e){ delete PRE[k]; throw e; });
+  return PRE[k];
+}
+function useCases(unit,sto,pin,by,r,keepTab){
+  S.unit=unit; S.sto=sto; S.pin=pin; S.by=by; S.cases=r.cases; S.today=r.today;
+  if(!keepTab) S.tab = r.cases.some(function(c){return c.type==='Active';}) ? 'Active' : 'Cancelled';
+}
+function setSync(t){ var e=$('sync'); if(e){ e.textContent=t; e.classList.toggle('hide',!t); } }
+function openCases(){
+  var unit=$('unit').value, sto=$('sto').value, by=$('by').value.trim(), pin=$('pin').value;
+  $('homeErr').textContent='';
+  if(!unit||!sto){ $('homeErr').textContent='Please select Unit and STO.'; return; }
+  if(!by){ $('homeErr').textContent='Please enter your name.'; return; }
+  store('unit',unit); store('sto',sto); store('by',by);
+  var saved=cacheGet(unit,sto,pin), fresh=prefetch(unit,sto,pin);
+  if(saved){                      // show the saved copy at once, refresh quietly
+    useCases(unit,sto,pin,by,saved); setTitle(unit+' · '+sto, by); show('sList'); renderList();
+    setSync('Refreshing latest data…');
+  } else busy(true);
+  fresh.then(function(r){
+    busy(false); setSync(''); delete PRE[ckey(unit,sto)+'|'+pin];
+    var onList = S.screen==='sList' && S.unit===unit && S.sto===sto;
+    useCases(unit,sto,pin,by,r,onList);
+    if(S.screen==='sForm') return;           // don't disturb an officer who is filling a form
+    setTitle(unit+' · '+sto, by); show('sList'); renderList();
+  }).catch(function(e){
+    busy(false);
+    delete PRE[ckey(unit,sto)+'|'+pin];
+    if(saved && S.screen!=='sHome') setSync('Could not refresh – showing data saved on this phone.');
+    else { setSync(''); show('sHome'); $('homeErr').textContent=e; }
+  });
+}
+
+/* ---------- list ---------- */
+function freshCut(){ var d=new Date(S.today+'T00:00:00'); d.setDate(d.getDate()-(S.meta.freshDays-1)); return d; }
+function isFresh(c){ return c.updatedOn && new Date(c.updatedOn.slice(0,10)+'T00:00:00')>=freshCut(); }
+function setTab(t){ S.tab=t; renderList(); }
+function renderList(){
+  var all=S.cases, cut=freshCut();
+  var act=all.filter(function(c){return c.type==='Active';}), can=all.filter(function(c){return c.type==='Cancelled';});
+  $('tA').textContent='Active ('+act.length+')'; $('tC').textContent='Cancelled ('+can.length+')';
+  $('tA').classList.toggle('on',S.tab==='Active'); $('tC').classList.toggle('on',S.tab==='Cancelled');
+  var bal=0, rec=0, upd=0;
+  all.forEach(function(c){ bal+=c.balance; rec+=c.recovered; if(isFresh(c)) upd++; });
+  $('stats').innerHTML='<div><b>'+all.length+'</b><span>Cases</span></div><div><b>'+short(bal)+'</b><span>Balance</span></div>'+
+    '<div><b>'+short(rec)+'</b><span>Recovered</span></div><div><b>'+upd+'/'+all.length+'</b><span>Updated '+S.meta.freshDays+'d</span></div>';
+  var q=$('q').value.trim().toLowerCase(), f=$('flt').value;
+  var list=(S.tab==='Active'?act:can).filter(function(c){
+    if(q && (c.name+' '+c.gstin+' '+c.demandId).toLowerCase().indexOf(q)<0) return false;
+    if(f==='todo' && isFresh(c)) return false;
+    if(f==='never' && c.updatedOn) return false;
+    if(f==='ledger' && !((Number(c.cash)||0)>0||(Number(c.credit)||0)>0)) return false;
+    return true;
+  }).sort(function(a,b){ return b.balance-a.balance; });
+  $('rows').innerHTML = list.length ? list.map(function(c,i){
+    var tag = !c.updatedOn ? '<span class="tag no">Pending</span>' :
+              isFresh(c) ? '<span class="tag ok">&#10003; '+dmy(c.updatedOn).slice(0,5)+'</span>' :
+              '<span class="tag old">'+dmy(c.updatedOn).slice(0,5)+'</span>';
+    return '<tr onclick="openForm(\''+esc(c.demandId)+'\')"><td class="c">'+(i+1)+'</td>'+
+      '<td>'+esc(c.name)+'<span class="sub">'+esc(c.gstin)+(c.step?' · '+esc(stepShort(c.step)):'')+'</span></td>'+
+      '<td class="n">'+inr(c.balance)+'</td><td>'+tag+'</td></tr>';
+  }).join('') : '<tr><td colspan="4" style="text-align:center;color:#666;padding:20px">No cases</td></tr>';
+}
+
+/* ---------- form ---------- */
+function openForm(id){
+  var c=S.cases.find(function(x){return x.demandId===id;}); if(!c) return;
+  S.cur=c; $('formErr').textContent='';
+  var mob = c.mobile ? '<a class="tel" href="tel:'+esc(c.mobile)+'">'+esc(c.mobile)+'</a>' : '';
+  $('info').innerHTML=[
+    ['Legal Name','<b>'+esc(c.name)+'</b>'],['GSTIN',esc(c.gstin)],['Demand ID',esc(c.demandId)],
+    ['Type / Section',esc(c.type)+' / '+esc(c.section)],['Demand Order Date',dmy(c.demandDate)],['Mobile',mob],
+    ['Pending Demand (Rs)',inr(c.pending)],['Recovered by STO (Rs)',inr(c.recovered)],['Balance Pending (Rs)','<b>'+inr(c.balance)+'</b>']
+  ].map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>';}).join('');
+  $('fCash').value = c.cash===''?'':c.cash; $('fCredit').value = c.credit===''?'':c.credit;
+  setSpot(c.spot||''); $('fSpotDate').value=c.spotDate||'';
+  var steps = c.type==='Cancelled' ? S.meta.stepsCancelled : S.meta.stepsActive;
+  if(c.step && steps.indexOf(c.step)<0) steps=steps.concat([c.step]);
+  $('fStep').innerHTML='<option value="">-- Select step --</option>'+steps.map(function(s){return '<option>'+esc(s)+'</option>';}).join('');
+  $('fStep').value=c.step||''; $('fStepDate').value=c.stepDate||'';
+  $('fAmt').value=''; $('fRecDate').value=''; $('recDateWrap').classList.add('hide');
+  $('already').textContent='Rs '+inr(c.recovered)+(c.recDate?' (last on '+dmy(c.recDate)+')':'');
+  $('fRem').value=c.remarks||'';
+  $('lastUpd').textContent = c.updatedOn ? 'Last updated on '+dmy(c.updatedOn)+' '+c.updatedOn.slice(11)+' by '+c.updatedBy : 'Not updated yet.';
+  [$('fSpotDate'),$('fStepDate'),$('fRecDate')].forEach(function(e){ e.max=S.today; });
+  setTitle(c.name, c.type+' case · '+S.sto); show('sForm');
+}
+function setSpot(v){
+  S.spot=v;
+  [].forEach.call($('fSpot').children,function(b){ b.classList.toggle('on',b.getAttribute('data-v')===v); });
+  $('spotDateWrap').classList.toggle('hide',v!=='Yes');
+}
+$('fAmt') && $('fAmt').addEventListener('input',function(){ $('recDateWrap').classList.toggle('hide',!this.value.trim()); });
+function numVal(id){ var v=$(id).value.replace(/[,\s]/g,''); return v; }
+
+function save(){
+  var c=S.cur, e=$('formErr'); e.textContent='';
+  var cash=numVal('fCash'), credit=numVal('fCredit'), amt=numVal('fAmt');
+  var bad=[[cash,'Cash ledger'],[credit,'Credit ledger'],[amt,'Amount recovered']].find(function(x){return x[0]!=='' && !/^\d+(\.\d+)?$/.test(x[0]);});
+  if(bad){ e.textContent=bad[1]+' must be a number.'; return; }
+  if(S.spot==='Yes' && !$('fSpotDate').value){ e.textContent='Please enter date of spot visit.'; return; }
+  if($('fStep').value && !$('fStepDate').value){ e.textContent='Please enter date of the recovery step.'; return; }
+  if(!$('fStep').value && $('fStepDate').value){ e.textContent='Please select the recovery step.'; return; }
+  if(amt!=='' && Number(amt)>0 && !$('fRecDate').value){ e.textContent='Please enter date of recovery.'; return; }
+  if($('fStep').value.indexOf('Other')===0 && !$('fRem').value.trim()){ e.textContent='Please describe the step in Remarks.'; return; }
+  if(amt!=='' && Number(amt)>c.balance && !confirm('Amount recovered is more than balance pending (Rs '+inr(c.balance)+'). Save anyway?')) return;
+  var p={ unit:S.unit, sto:S.sto, pin:S.pin, by:S.by, demandId:c.demandId, cash:cash, credit:credit, spot:S.spot,
+    spotDate:$('fSpotDate').value, step:$('fStep').value, stepDate:$('fStepDate').value,
+    amount:amt, recDate:$('fRecDate').value, remarks:$('fRem').value };
+  $('saveBtn').disabled=true; busy(true);
+  api('saveUpdate',p).then(function(upd){
+    busy(false); $('saveBtn').disabled=false;
+    var i=S.cases.findIndex(function(x){return x.demandId===upd.demandId;}); if(i>=0) S.cases[i]=upd;
+    cachePut(S.unit,S.sto,S.pin,{cases:S.cases,today:S.today}); delete PRE[ckey(S.unit,S.sto)+'|'+S.pin];
+    toast('Saved ✓'); goBack();
+  }).catch(function(err){ busy(false); $('saveBtn').disabled=false; e.textContent=err; });
+}
+
+/* ---------- summary ---------- */
+function openSummary(){
+  busy(true);
+  api('getSummary').then(function(s){
+    busy(false);
+    $('sumAsOn').textContent='As on '+s.asOn+' · Target = '+s.targetPct+'% of pending demand';
+    var html='', units=[];
+    s.rows.forEach(function(r){ if(units.indexOf(r.unit)<0) units.push(r.unit); });
+    var G={total:0,balance:0,recovered:0,target:0,updated:0};
+    units.forEach(function(u){
+      var T={total:0,balance:0,recovered:0,target:0,updated:0};
+      html+='<tr><td colspan="6" style="background:#f3f3f3;font-weight:700;color:#217346">'+esc(u)+'</td></tr>';
+      s.rows.filter(function(r){return r.unit===u;}).forEach(function(r){
+        html+=line(r.sto,r); ['total','balance','recovered','target','updated'].forEach(function(k){T[k]+=r[k];G[k]+=r[k];});
+      });
+      html+=line('Unit Total',T,true);
+    });
+    html+=line('DIVISION TOTAL',G,true);
+    $('sumRows').innerHTML=html;
+    setTitle('STO-wise Summary', s.division); show('sSum');
+  }).catch(function(e){ busy(false); $('homeErr').textContent=e; });
+  function line(name,r,tot){
+    var pt=r.target? (r.recovered*100/r.target).toFixed(1)+'%' : '-';
+    var pu=r.total? Math.round(r.updated*100/r.total) : 0;
+    var cls=pu>=75?'ok':pu<25?'no':'old';
+    return '<tr'+(tot?' class="tot"':'')+'><td>'+esc(name)+'</td><td class="n">'+r.total+'</td><td class="n">'+short(r.balance)+'</td><td class="n">'+short(r.recovered)+
+      '</td><td class="n">'+pt+'</td><td class="n"><span class="tag '+cls+'">'+r.updated+'/'+r.total+'</span></td></tr>';
+  }
+}
+
+/* ---------- install as app ---------- */
+var deferredPrompt=null;
+function isInstalled(){ return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true; }
+window.addEventListener('beforeinstallprompt',function(e){ e.preventDefault(); deferredPrompt=e; $('installBtn').classList.remove('hide'); $('installHint').classList.add('hide'); });
+window.addEventListener('appinstalled',function(){ deferredPrompt=null; $('installBtn').classList.add('hide'); toast('App installed ✓ – open it from your home screen'); });
+function installApp(){
+  if(!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(function(){ deferredPrompt=null; $('installBtn').classList.add('hide'); });
+}
+if(!isInstalled()) setTimeout(function(){ if(!deferredPrompt) $('installHint').classList.remove('hide'); },2500);
+if('serviceWorker' in navigator){ window.addEventListener('load',function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }
+
+/* Android back button inside the installed app: go back one screen instead of closing */
+if(isInstalled() && window.history && history.pushState){
+  history.pushState({app:1},'');
+  window.addEventListener('popstate',function(){
+    if(S.screen!=='sHome'){ goBack(); history.pushState({app:1},''); }
+    else history.back();   // on first screen: close the app
+  });
+}
+init();
+</script>
+</body>
+</html>
