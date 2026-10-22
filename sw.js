@@ -1,8 +1,8 @@
 /* STO Recovery – offline support.
    Pages: try the internet first (so updates reach everyone), fall back to the saved copy.
    Data requests to Google (POST) are never cached here. */
-const CACHE = 'sto-recovery-v1';
-const FILES = ['./', 'index.html', 'config.js', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
+const CACHE = 'sto-recovery-v2';
+const FILES = ['./', 'index.html', 'config.js', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'logo-mark.png', 'logo-word.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
